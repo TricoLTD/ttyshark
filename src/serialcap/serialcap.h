@@ -27,7 +27,7 @@ public:
     void run();
 
 private:
-    using status = std::expected<void, std::error_code>;
+    using status = std::expected<void, std::string>;
     status open_port();
     void close_port();
 

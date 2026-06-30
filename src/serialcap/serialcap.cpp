@@ -12,7 +12,7 @@ serialcap::status serialcap::open_port() {
     fd_ = ::open(device_.c_str(), O_RDONLY | O_NOCTTY);
 
     if (fd_ == -1) {
-        return std::unexpected("Device inaccessible! is it correct and do");
+        return std::unexpected("Device inaccessible! is it correct and do you have permissions?");
     }
 
 }
