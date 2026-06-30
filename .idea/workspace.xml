@@ -23,15 +23,13 @@
   <component name="CMakeSettings">
     <configurations>
       <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" GENERATION_OPTIONS="-S /home/sera/CLionProjects/ttyshark -B /home/sera/CLionProjects/ttyshark/cmake-build-debug -DCMAKE_TOOLCHAIN_FILE=/home/sera/CLionProjects/ttyshark/cmake-build-debug/build/Debug/generators/conan_toolchain.cmake" NO_GENERATOR="true" />
-      <configuration PROFILE_NAME="conan-debug" PROFILE_DISPLAY_NAME="'conan-debug' config" ENABLED="false" FROM_PRESET="true" GENERATION_DIR="$PROJECT_DIR$/cmake-build-debug/build/Debug" />
-      <configuration PROFILE_NAME="conan-debug - conan-debug" ENABLED="false" FROM_PRESET="true" GENERATION_DIR="$PROJECT_DIR$/cmake-build-debug/build/Debug" />
+      <configuration PROFILE_NAME="Release" ENABLED="true" CONFIG_NAME="Release" GENERATION_OPTIONS="-S /home/sera/CLionProjects/ttyshark -B /home/sera/CLionProjects/ttyshark/cmake-build-debug -DCMAKE_TOOLCHAIN_FILE=/home/sera/CLionProjects/ttyshark/cmake-build-debug/build/Release/generators/conan_toolchain.cmake" />
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="async process owned by a serialcap entity">
+    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="lets test">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/serialcap/serialcap.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/serialcap/serialcap.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeUserPresets.json" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeUserPresets.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +39,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Release" />
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -107,6 +105,11 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ttyshark" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ttyshark" TARGET_NAME="ttyshark" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ttyshark" RUN_TARGET_NAME="ttyshark">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -126,7 +129,7 @@
       <workItem from="1782784444194" duration="1710000" />
       <workItem from="1782789165408" duration="5810000" />
       <workItem from="1782836816019" duration="11660000" />
-      <workItem from="1782854802598" duration="422000" />
+      <workItem from="1782854802598" duration="1265000" />
     </task>
     <task id="LOCAL-00001" summary="its working now">
       <option name="closed" value="true" />
@@ -280,7 +283,15 @@
       <option name="project" value="LOCAL" />
       <updated>1782846689946</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="lets test">
+      <option name="closed" value="true" />
+      <created>1782855244553</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1782855244553</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -321,7 +332,8 @@
     <MESSAGE value="remove an unused import and boom it all works" />
     <MESSAGE value="igm net and workflow dispatch" />
     <MESSAGE value="async process owned by a serialcap entity" />
-    <option name="LAST_COMMIT_MESSAGE" value="async process owned by a serialcap entity" />
+    <MESSAGE value="lets test" />
+    <option name="LAST_COMMIT_MESSAGE" value="lets test" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

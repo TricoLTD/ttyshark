@@ -1,7 +1,7 @@
 #include "ttyshark.h"
 #include <vector>
 #include <string>
-#include "serialcap/serialcap.cpp"
+#include "serialcap/serialcap.h"
 
 
 int main() {
