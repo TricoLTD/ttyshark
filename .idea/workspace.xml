@@ -25,9 +25,13 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="its working now">
+    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="its working now on linux target">
+      <change afterPath="$PROJECT_DIR$/src/modbusRTU/modbusrtu.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/modbusRTU/modbusrtu.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/serialcap/serialcap.cpp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/serialcap/serialcap.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeUserPresets.json" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeUserPresets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -96,6 +100,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
@@ -119,7 +128,7 @@
       <option name="presentableId" value="Default" />
       <updated>1782784443041</updated>
       <workItem from="1782784444194" duration="1710000" />
-      <workItem from="1782789165408" duration="152000" />
+      <workItem from="1782789165408" duration="1580000" />
     </task>
     <task id="LOCAL-00001" summary="its working now">
       <option name="closed" value="true" />
@@ -129,7 +138,15 @@
       <option name="project" value="LOCAL" />
       <updated>1782784626289</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="its working now on linux target">
+      <option name="closed" value="true" />
+      <created>1782789356356</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1782789356356</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -154,7 +171,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="its working now" />
-    <option name="LAST_COMMIT_MESSAGE" value="its working now" />
+    <MESSAGE value="its working now on linux target" />
+    <option name="LAST_COMMIT_MESSAGE" value="its working now on linux target" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
