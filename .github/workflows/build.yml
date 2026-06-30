@@ -38,7 +38,6 @@ jobs:
       - name: Install dependencies
         run: |
           conan install . \
-            --output-folder=build \
             --build=missing \
             -s build_type=Debug \
             -s compiler.cppstd=23
@@ -52,4 +51,4 @@ jobs:
             -DCMAKE_TOOLCHAIN_FILE=build/Debug/conan_toolchain.cmake
       - name: Build
         run: |
-          cmake --build build --parallel
+          cmake --build build/Debug --parallel
