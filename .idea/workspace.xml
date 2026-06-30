@@ -28,13 +28,7 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="check my work but this looks right">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/build.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/conanfile.py" beforeDir="false" afterPath="$PROJECT_DIR$/conanfile.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_package/conanfile.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_package/conanfile.py" afterDir="false" />
-    </list>
+    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="forogt about uv not being pip" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -132,7 +126,7 @@
       <updated>1782784443041</updated>
       <workItem from="1782784444194" duration="1710000" />
       <workItem from="1782789165408" duration="5810000" />
-      <workItem from="1782836816019" duration="6413000" />
+      <workItem from="1782836816019" duration="6722000" />
     </task>
     <task id="LOCAL-00001" summary="its working now">
       <option name="closed" value="true" />
@@ -206,7 +200,23 @@
       <option name="project" value="LOCAL" />
       <updated>1782842593424</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="we try a little github actions">
+      <option name="closed" value="true" />
+      <created>1782843472335</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1782843472335</updated>
+    </task>
+    <task id="LOCAL-00011" summary="forogt about uv not being pip">
+      <option name="closed" value="true" />
+      <created>1782843542741</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1782843542741</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -238,7 +248,9 @@
     <MESSAGE value="start fleshing out run program for serialcap" />
     <MESSAGE value="pause point for research" />
     <MESSAGE value="check my work but this looks right" />
-    <option name="LAST_COMMIT_MESSAGE" value="check my work but this looks right" />
+    <MESSAGE value="we try a little github actions" />
+    <MESSAGE value="forogt about uv not being pip" />
+    <option name="LAST_COMMIT_MESSAGE" value="forogt about uv not being pip" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
