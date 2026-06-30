@@ -49,7 +49,7 @@ jobs:
             -S . \
             -B build/Debug \
             -DCMAKE_BUILD_TYPE=Debug \
-            -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake
+            -DCMAKE_TOOLCHAIN_FILE=build/Debug/conan_toolchain.cmake
       - name: Build
         run: |
           cmake --build build --parallel
