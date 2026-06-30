@@ -1,0 +1,47 @@
+Command List:
+
+
+3D      Clear Alarms
+3E      Reset Alarms
+7C      Get Customer Alarm 1 Text
+7D      Get Customer Alarm 2 Text
+7E      Get Unit Type and Data
+7F      Get Unit Status Buffer Sizes
+AE      Acknowledge Alarms
+B2      Get Data Runtime Values
+BC      Get Alarm Values - Variable Size Buffers
+BD      Get Control Values
+BE      Get Data Status Values
+BF      Get Alarm Values - Fixed Size Buffers
+
+SET Commands
+80      Temperature Setpoint
+81      Temperature Tolerance
+82      Humidity Setpoint
+83      Humidity Tolerance
+84      High Temperature Alarm
+85      Low Temperature Alarm
+86      High Humidity Alarm
+87      Low Humidity Alarm
+89      Restart Delay
+
+SETINT Commands
+90      Set Unit On/Off
+        Off = 49
+        On = 50
+
+**New Unit Instructions:
+Run 7E command to determine unit type
+Run 7F command to determine buffer sizes
+
+   If Unit returns A= S= C=, then
+           Alarms Address    = A *BF command get alarm values
+           Data Address      = S
+           Controls Address  = C  *If required else = 0
+           Run Hours Address = Run B2 command to get size if required else = 0
+
+   If Unit returns E= S= C=, Alarm Buffer size is variable then
+           Alarms Address    = 2 *BC command get alarm values
+           Data Address      = S
+           Controls Address  = C  *If required else = 0
+           Run Hours Address = Run B2 command to get size if required else = 0
