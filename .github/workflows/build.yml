@@ -24,7 +24,8 @@ jobs:
             make \
             ninja-build \
             cmake \
-            uv \
+            python3 \
+            python3-pip \
             git
       - name: Install Conan
         run: |
