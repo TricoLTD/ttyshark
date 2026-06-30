@@ -1,23 +1,43 @@
-# This file is managed by Conan, contents will be overwritten.
-# To keep your changes, remove these comment lines, but the plugin won't be able to modify your requirements
-
 from conan import ConanFile
-from conan.tools.cmake import cmake_layout, CMakeToolchain
+from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout, CMakeDeps
 
-class ConanApplication(ConanFile):
+
+class ttysharkRecipe(ConanFile):
+    name = "ttyshark"
+    version = "0.1"
     package_type = "application"
+
+    # Optional metadata
+    license = "<Put the package license here>"
+    author = "<Put your name here> <And your email here>"
+    url = "<Package recipe repository url here, for issues about the package>"
+    description = "<Description of ttyshark package here>"
+    topics = ("<Put some tag here>", "<here>", "<and here>")
+
+    # Binary configuration
     settings = "os", "compiler", "build_type", "arch"
-    generators = "CMakeDeps"
+
+    # Sources are located in the same place as this recipe, copy them to the recipe
+    exports_sources = "CMakeLists.txt", "src/*"
 
     def layout(self):
         cmake_layout(self)
 
     def generate(self):
+        deps = CMakeDeps(self)
+        deps.generate()
         tc = CMakeToolchain(self)
-        tc.user_presets_path = False
         tc.generate()
 
-    def requirements(self):
-        requirements = self.conan_data.get('requirements', [])
-        for requirement in requirements:
-            self.requires(requirement)
+    def build(self):
+        cmake = CMake(self)
+        cmake.configure()
+        cmake.build()
+
+    def package(self):
+        cmake = CMake(self)
+        cmake.install()
+
+    
+
+    

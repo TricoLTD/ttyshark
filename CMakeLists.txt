@@ -1,6 +1,14 @@
-cmake_minimum_required(VERSION 4.2)
-project(ttyshark)
+cmake_minimum_required(VERSION 3.15)
+project(ttyshark CXX)
 
-set(CMAKE_CXX_STANDARD 23)
 
-add_executable(ttyshark main.cpp)
+
+add_executable(ttyshark src/ttyshark.cpp src/main.cpp)
+
+
+
+install(TARGETS ttyshark DESTINATION "."
+        RUNTIME DESTINATION bin
+        ARCHIVE DESTINATION lib
+        LIBRARY DESTINATION lib
+        )
