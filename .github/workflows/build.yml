@@ -1,0 +1,55 @@
+name: checkBuild
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: rockylinux/rockylinux:10
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install build tools
+        run: |
+          dnf -y update
+          dnf install -y \
+            gcc \
+            gcc-c++ \
+            make \
+            ninja-build \
+            cmake \
+            uv \
+            git
+      - name: Install Conan
+        run: |
+          python3 -m pip install --break-system-packages --upgrade pip
+          python3 -m pip install --break-system-packages conan
+
+      - name: Detect Conan profile
+        run: |
+          conan profile detect --force
+
+      - name: Install dependencies
+        run: |
+          conan install . \
+            --output-folder=build \
+            --build=missing \
+            -s build_type=Debug \
+            -s compiler.cppstd=23
+
+      - name: Configure
+        run: |
+          cmake \
+            -S . \
+            -B build \
+            -DCMAKE_BUILD_TYPE=Debug \
+            -DCMAKE_TOOLCHAIN_FILE=build/conan_toolchain.cmake
+      - name: Build
+        run: |
+          cmake --build build --parallel
