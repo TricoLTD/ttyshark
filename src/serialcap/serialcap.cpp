@@ -29,7 +29,7 @@ auto serialcap::wait() -> std::expected<int, std::runtime_error> {
 }
 
 auto serialcap::run(unsigned int await, unsigned int chunkness) -> std::expected<int, std::runtime_error> {
-        if (auto result = open_port()) {
+    if (auto result = open_port()) {
         printf("Successfully opened %s", device_.c_str());
     } else {
         printf("Failed to open %s\n", device_.c_str());
