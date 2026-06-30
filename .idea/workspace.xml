@@ -28,7 +28,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="forogt about uv not being pip" />
+    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="I dont actually think I need ninja so lets just pull it">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -126,7 +128,7 @@
       <updated>1782784443041</updated>
       <workItem from="1782784444194" duration="1710000" />
       <workItem from="1782789165408" duration="5810000" />
-      <workItem from="1782836816019" duration="6722000" />
+      <workItem from="1782836816019" duration="7033000" />
     </task>
     <task id="LOCAL-00001" summary="its working now">
       <option name="closed" value="true" />
@@ -216,7 +218,15 @@
       <option name="project" value="LOCAL" />
       <updated>1782843542741</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="I dont actually think I need ninja so lets just pull it">
+      <option name="closed" value="true" />
+      <created>1782843742172</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1782843742172</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,7 +260,8 @@
     <MESSAGE value="check my work but this looks right" />
     <MESSAGE value="we try a little github actions" />
     <MESSAGE value="forogt about uv not being pip" />
-    <option name="LAST_COMMIT_MESSAGE" value="forogt about uv not being pip" />
+    <MESSAGE value="I dont actually think I need ninja so lets just pull it" />
+    <option name="LAST_COMMIT_MESSAGE" value="I dont actually think I need ninja so lets just pull it" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
