@@ -3,6 +3,9 @@
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
+  <component name="BackendCodeEditorMiscSettings">
+    <option name="/Default/Housekeeping/FeatureSuggestion/FeatureSuggestionManager/DisabledSuggesters/=SwitchToGoToActionSuggester/@EntryIndexedValue" value="true" type="bool" />
+  </component>
   <component name="CMakePresetLoader">{
   &quot;useNewFormat&quot;: true
 }</component>
@@ -25,7 +28,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="oops deleted a bracket" />
+    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="start fleshing out run program for serialcap">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/serialcap/serialcap.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/serialcap/serialcap.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/serialcap/serialcap.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/serialcap/serialcap.h" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -71,6 +78,7 @@
   &quot;keyToString&quot;: {
     &quot;CMake Application.ttyshark.executor&quot;: &quot;Run&quot;,
     &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.GPG_PINENTRY_CONFIGURATION_PROPOSAL&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.RadMigrateCodeStyle&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
@@ -99,11 +107,6 @@
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="ttyshark" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ttyshark" TARGET_NAME="ttyshark" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ttyshark" RUN_TARGET_NAME="ttyshark">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -121,7 +124,8 @@
       <option name="presentableId" value="Default" />
       <updated>1782784443041</updated>
       <workItem from="1782784444194" duration="1710000" />
-      <workItem from="1782789165408" duration="3107000" />
+      <workItem from="1782789165408" duration="5810000" />
+      <workItem from="1782836816019" duration="8000" />
     </task>
     <task id="LOCAL-00001" summary="its working now">
       <option name="closed" value="true" />
@@ -163,7 +167,15 @@
       <option name="project" value="LOCAL" />
       <updated>1782791951912</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="add some docs">
+      <option name="closed" value="true" />
+      <created>1782792421073</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1782792421073</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -191,7 +203,9 @@
     <MESSAGE value="its working now on linux target" />
     <MESSAGE value="backbone serialcap and configure modbus" />
     <MESSAGE value="oops deleted a bracket" />
-    <option name="LAST_COMMIT_MESSAGE" value="oops deleted a bracket" />
+    <MESSAGE value="add some docs" />
+    <MESSAGE value="start fleshing out run program for serialcap" />
+    <option name="LAST_COMMIT_MESSAGE" value="start fleshing out run program for serialcap" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

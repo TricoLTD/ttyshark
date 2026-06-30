@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <expected>
 #include <system_error>
+#include <termios.h>
 
 
 class serialcap {
@@ -25,18 +26,23 @@ public:
     }
 
     /**
-     * Run main loop
+     * Run main monitoring loop
      */
     void run();
 
 private:
-    using status = std::expected<void, std::string>;
+    using status = std::expected<int, std::string>;
 
     /**
      * Open serial port
      * @return error iff contains string
      */
     status open_port();
+
+    /**
+     * Close a port
+     * this action should never fail
+     */
     void close_port();
 
     std::string device_;
