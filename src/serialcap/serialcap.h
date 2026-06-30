@@ -24,10 +24,18 @@ public:
     {
     }
 
+    /**
+     * Run main loop
+     */
     void run();
 
 private:
     using status = std::expected<void, std::string>;
+
+    /**
+     * Open serial port
+     * @return error iff contains string
+     */
     status open_port();
     void close_port();
 
