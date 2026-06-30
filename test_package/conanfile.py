@@ -7,6 +7,7 @@ class ttysharkTestConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
 
     def requirements(self):
+        self.requires("libmodbus/3.1.12")
         self.requires(self.tested_reference_str)
 
     def test(self):

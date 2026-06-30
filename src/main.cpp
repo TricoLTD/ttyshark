@@ -1,6 +1,8 @@
 #include "ttyshark.h"
 #include <vector>
 #include <string>
+#include <modbus/modbus.h>
+
 
 int main() {
     ttyshark();
