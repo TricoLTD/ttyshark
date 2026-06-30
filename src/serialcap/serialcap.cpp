@@ -4,27 +4,88 @@
 
 #include "serialcap.h"
 
-void serialcap::run() {
+#include <cstring>
+#include <fstream>
+#include <ios>
+#include <vector>
+#include <sys/file.h>
+
+std::expected<int, std::runtime_error> serialcap::run(const unsigned int await, const unsigned int chunkness) {
     if (auto result = open_port()) {
         printf("Successfully opened %s", device_.c_str());
     } else {
         printf("Failed to open %s\n", device_.c_str());
         printf("%s\n", result.error().c_str());
-        return;
+        return std::unexpected(std::runtime_error("Failed to open"));
+    }
+
+    if (flock(fd_, LOCK_EX | LOCK_NB) == -1) {
+        return std::unexpected(std::runtime_error("Serial port with file descriptor " + std::to_string(fd_) + " is already locked by another process."));
     }
 
     termios tty{};
     if (tcgetattr(fd_, &tty) != 0) {
         printf("tcgetattr failed");
         close_port();
-        return;
+        return std::unexpected(std::runtime_error("tcgetattr failed"));
     }
 
     cfsetispeed(&tty, baud_);
 
+    // reference material https://blog.mbedded.ninja/programming/operating-systems/linux/linux-serial-ports-using-c-cpp/
+    // CFLAGS
+    tty.c_cflag &= ~(PARENB | CSTOPB | CSIZE | CRTSCTS);
+    tty.c_cflag |= CS8 | CREAD | CLOCAL;
+
+    // LFLAGS
+    tty.c_lflag &= ~(ICANON | ECHO | ECHOE | ECHONL | ISIG );
+
+    // IFLAGS
+    tty.c_iflag &= ~(IXON | IXOFF | IXANY | IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL);
+
+    // OFLAGS
+    #ifdef _WIN32
+    tty.c_oflag &= ~(OPOST | ONLCR | OXTABS | ONOEOT);
+    #else
+    tty.c_oflag &= ~(OPOST | ONLCR);
+    #endif
+
+    tty.c_cc[VMIN] = chunkness;
+    tty.c_cc[VTIME] = await;
+
+    if (tcsetattr(fd_, TCSANOW, &tty) != 0) {
+        printf("Error %i from tcsetattr: %s\n", errno, strerror(errno));
+        return std::unexpected(std::runtime_error("Error " + std::to_string(errno) + "from tcsetattr" + strerror(errno)));
+    }
+
+    running_ = true;
+    std::ofstream out (capfile_, std::ios::binary);
+    std::vector<char> capture_buffer;
+    capture_buffer.reserve(5079040);
+
+    char buffer[256];
+    do {
+        if (ssize_t n = ::read(fd_, &buffer[0], sizeof(buffer)); n > 0) {
+            capture_buffer.insert(capture_buffer.end(), buffer, buffer + n);
+        }
+
+        if (capture_buffer.size() >= 5079040) {
+            out.write(capture_buffer.data(), capture_buffer.size());
+            capture_buffer.clear();
+        }
+
+    } while (running_);
+    capture_buffer.insert(capture_buffer.end(), buffer, buffer + 256);
+    if (!capture_buffer.empty()) {
+        out.write(capture_buffer.data(), capture_buffer.size());
+    }
+
+    out.close();
+    close_port();
+    return 1;
 }
 
-serialcap::status serialcap::open_port() {
+auto serialcap::open_port() -> serialcap::status {
     fd_ = ::open(device_.c_str(), O_RDONLY | O_NOCTTY);
 
     if (fd_ == -1) {

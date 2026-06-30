@@ -4,11 +4,13 @@
 
 #ifndef TTYSHARK_SERIALCAP_H
 #define TTYSHARK_SERIALCAP_H
+#include <atomic>
 #include <string>
 #include <fcntl.h>
 #include <unistd.h>
 #include <expected>
 #include <system_error>
+#include <utility>
 #include <termios.h>
 
 
@@ -19,16 +21,21 @@ public:
      * @param device
      * @param baud
      */
-    serialcap(std::string device, const int baud)
+    serialcap(std::string device, const speed_t baud, std::string capfile)
         : device_(std::move(device)),
-          baud_(baud)
+          baud_(baud),
+          capfile_(std::move(capfile))
     {
     }
 
     /**
      * Run main monitoring loop
+     * @param await time in deciseconds to wait before returning buffered bytes
+     * @param chunkness amount of bytes to hold before write at a time
      */
-    void run();
+    std::expected<int, std::runtime_error> run(unsigned int await, unsigned int chunkness);
+
+    void stop() { running_ = false; }
 
 private:
     using status = std::expected<int, std::string>;
@@ -46,8 +53,10 @@ private:
     void close_port();
 
     std::string device_;
-    unsigned int baud_;
+    speed_t baud_;
     int fd_{-1};
+    std::atomic<bool> running_ = false;
+    std::string capfile_;
 };
 
 
