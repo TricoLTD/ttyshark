@@ -11,7 +11,8 @@ add_executable(ttyshark src/ttyshark.cpp src/main.cpp
         src/modbusRTU/modbusrtu.cpp
         src/modbusRTU/modbusrtu.h
         src/serialcap/serialcap.cpp
-        src/serialcap/serialcap.h)
+        src/serialcap/serialcap.h
+        src/IGMnet/igmnet.h)
 
 #target_link_libraries(ttyshark PRIVATE libmodbus::libmodbus)
 

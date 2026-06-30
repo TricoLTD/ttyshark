@@ -28,7 +28,9 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="I think I fixed the action for the last time tm" />
+    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="remove an unused import and boom it all works">
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -126,7 +128,7 @@
       <updated>1782784443041</updated>
       <workItem from="1782784444194" duration="1710000" />
       <workItem from="1782789165408" duration="5810000" />
-      <workItem from="1782836816019" duration="7508000" />
+      <workItem from="1782836816019" duration="7819000" />
     </task>
     <task id="LOCAL-00001" summary="its working now">
       <option name="closed" value="true" />
@@ -248,7 +250,23 @@
       <option name="project" value="LOCAL" />
       <updated>1782844242948</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="I can just conan build">
+      <option name="closed" value="true" />
+      <created>1782844446648</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1782844446648</updated>
+    </task>
+    <task id="LOCAL-00017" summary="remove an unused import and boom it all works">
+      <option name="closed" value="true" />
+      <created>1782844519699</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1782844519699</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -285,7 +303,9 @@
     <MESSAGE value="I dont actually think I need ninja so lets just pull it" />
     <MESSAGE value="it helps when it knows where Debug is" />
     <MESSAGE value="I think I fixed the action for the last time tm" />
-    <option name="LAST_COMMIT_MESSAGE" value="I think I fixed the action for the last time tm" />
+    <MESSAGE value="I can just conan build" />
+    <MESSAGE value="remove an unused import and boom it all works" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove an unused import and boom it all works" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
