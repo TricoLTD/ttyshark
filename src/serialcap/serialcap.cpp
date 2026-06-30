@@ -10,8 +10,26 @@
 #include <vector>
 #include <sys/file.h>
 
-std::expected<int, std::runtime_error> serialcap::run(const unsigned int await, const unsigned int chunkness) {
-    if (auto result = open_port()) {
+void serialcap::start(unsigned int await, unsigned int chunkness) {
+    if (running_) {
+        throw std::logic_error("Capture already running.");
+    }
+
+    worker_ = std::async(
+    std::launch::async,
+    &serialcap::run,
+    this,
+    await,
+    chunkness
+);
+}
+
+auto serialcap::wait() -> std::expected<int, std::runtime_error> {
+    return worker_.get();
+}
+
+auto serialcap::run(unsigned int await, unsigned int chunkness) -> std::expected<int, std::runtime_error> {
+        if (auto result = open_port()) {
         printf("Successfully opened %s", device_.c_str());
     } else {
         printf("Failed to open %s\n", device_.c_str());

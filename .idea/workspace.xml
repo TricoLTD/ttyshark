@@ -23,13 +23,14 @@
   <component name="CMakeSettings">
     <configurations>
       <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" GENERATION_OPTIONS="-S /home/sera/CLionProjects/ttyshark -B /home/sera/CLionProjects/ttyshark/cmake-build-debug -DCMAKE_TOOLCHAIN_FILE=/home/sera/CLionProjects/ttyshark/cmake-build-debug/build/Debug/generators/conan_toolchain.cmake" NO_GENERATOR="true" />
-      <configuration PROFILE_NAME="conan-debug" PROFILE_DISPLAY_NAME="'conan-debug' config" ENABLED="false" FROM_PRESET="true" GENERATION_DIR="$PROJECT_DIR$/cmake-build-debug/build/Debug" />
-      <configuration PROFILE_NAME="conan-debug - conan-debug" ENABLED="false" FROM_PRESET="true" GENERATION_DIR="$PROJECT_DIR$/cmake-build-debug/build/Debug" />
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="remove an unused import and boom it all works">
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="igm net and workflow dispatch">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeUserPresets.json" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeUserPresets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/serialcap/serialcap.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/serialcap/serialcap.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/serialcap/serialcap.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/serialcap/serialcap.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -128,7 +129,7 @@
       <updated>1782784443041</updated>
       <workItem from="1782784444194" duration="1710000" />
       <workItem from="1782789165408" duration="5810000" />
-      <workItem from="1782836816019" duration="7819000" />
+      <workItem from="1782836816019" duration="9838000" />
     </task>
     <task id="LOCAL-00001" summary="its working now">
       <option name="closed" value="true" />
@@ -266,7 +267,15 @@
       <option name="project" value="LOCAL" />
       <updated>1782844519699</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="igm net and workflow dispatch">
+      <option name="closed" value="true" />
+      <created>1782844703007</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1782844703007</updated>
+    </task>
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -305,7 +314,8 @@
     <MESSAGE value="I think I fixed the action for the last time tm" />
     <MESSAGE value="I can just conan build" />
     <MESSAGE value="remove an unused import and boom it all works" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove an unused import and boom it all works" />
+    <MESSAGE value="igm net and workflow dispatch" />
+    <option name="LAST_COMMIT_MESSAGE" value="igm net and workflow dispatch" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
