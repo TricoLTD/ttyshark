@@ -77,23 +77,23 @@ auto serialcap::run(unsigned int await, unsigned int chunkness) -> std::expected
     }
 
     running_ = true;
-    std::ofstream out (capfile_, std::ios::binary);
+
     std::vector<char> capture_buffer;
     capture_buffer.reserve(5079040);
 
     char buffer[256];
     do {
-        if (ssize_t n = ::read(fd_, &buffer[0], sizeof(buffer)); n > 0) {
+        if (ssize_t n = ::read(fd_, buffer, sizeof(buffer)); n > 0) {
             capture_buffer.insert(capture_buffer.end(), buffer, buffer + n);
         }
-
-        if (capture_buffer.size() >= 5079040) {
-            out.write(capture_buffer.data(), capture_buffer.size());
-            capture_buffer.clear();
-        }
-
     } while (running_);
-    capture_buffer.insert(capture_buffer.end(), buffer, buffer + 256);
+
+    for (std::size_t i = 0; i + 1 < capture_buffer.size(); i += 2) {
+        std::swap(capture_buffer[i], capture_buffer[i + 1]);
+    }
+
+    std::ofstream out(capfile_, std::ios::binary);
+
     if (!capture_buffer.empty()) {
         out.write(capture_buffer.data(), capture_buffer.size());
     }
