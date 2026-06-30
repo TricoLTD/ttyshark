@@ -46,7 +46,7 @@ private:
     void close_port();
 
     std::string device_;
-    int baud_;
+    unsigned int baud_;
     int fd_{-1};
 };
 

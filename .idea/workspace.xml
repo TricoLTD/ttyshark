@@ -107,6 +107,11 @@
     </key>
   </component>
   <component name="RunManager">
+    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="ttyshark" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="ttyshark" TARGET_NAME="ttyshark" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="ttyshark" RUN_TARGET_NAME="ttyshark">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -125,7 +130,7 @@
       <updated>1782784443041</updated>
       <workItem from="1782784444194" duration="1710000" />
       <workItem from="1782789165408" duration="5810000" />
-      <workItem from="1782836816019" duration="8000" />
+      <workItem from="1782836816019" duration="967000" />
     </task>
     <task id="LOCAL-00001" summary="its working now">
       <option name="closed" value="true" />
@@ -175,7 +180,15 @@
       <option name="project" value="LOCAL" />
       <updated>1782792421073</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="start fleshing out run program for serialcap">
+      <option name="closed" value="true" />
+      <created>1782836837080</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1782836837080</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

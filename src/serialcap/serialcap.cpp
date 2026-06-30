@@ -13,7 +13,7 @@ void serialcap::run() {
         return;
     }
 
-    struct termios tty{};
+    termios tty{};
     if (tcgetattr(fd_, &tty) != 0) {
         printf("tcgetattr failed");
         close_port();
