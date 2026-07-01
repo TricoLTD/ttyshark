@@ -5,17 +5,33 @@
 #ifndef TTYSHARK_MODBUSRTU_H
 #define TTYSHARK_MODBUSRTU_H
 #include <cstdint>
+#include <format>
 #include <ranges>
 #include <stdexcept>
 #include <vector>
 
+/**
+ * Fancy uint8_t
+ */
 class ModbusAddr {
     public:
-    explicit ModbusAddr(const uint8_t Addr) {
+    explicit ModbusAddr(const uint8_t Addr) : Address(Addr) {
         if (Addr > 247) {
             throw std::out_of_range("Address Not Valid");
         }
     };
+
+    uint8_t Address;
+
+    std::string getName() {
+        switch (Address) {
+            case 0x00:
+                return "Global/Broadcast 0x00";
+                break;
+            default:
+                return std::format("Device {:x}", Address);
+        }
+    }
 };
 
 class modbusrtu {
@@ -25,7 +41,10 @@ public:
         WriteSingleRegister, Diagnostics, GCEC, WriteMultipleCoils, WriteMultipleRegisters, ReportServerID,
         MaskWriteReg, ReadWriteMultipleReg, Unknown};
 
-    uint8_t broadcast_ = 0x00;
+    struct devAddr {
+        ModbusAddr modbusAddr;
+        std::string devName;
+    };
 
     struct functionInfo {
         std::string FunctionName;
@@ -144,12 +163,15 @@ public:
      * PDU for modbus
      */
     struct modbusPdu {
-        ModbusAddr Addr;
+        devAddr Addr;
         functionInfo Func;
         std::vector<uint8_t> Data;
         uint16_t CRC;
     };
 
+    /**
+     * PDU as strings
+     */
     struct stringifyPdu {
         std::string Addr;
         std::string Func;
@@ -213,7 +235,12 @@ public:
         return crc;
     }
 
-    static std::vector<modbusPdu> analyzeCapture(const std::string &fileName);
+    /**
+     * Lex a capture file and return modbus PDU's
+     * @param fileName
+     * @return
+     */
+    static std::vector<modbusPdu> lexCapture(const std::string &fileName);
 
 };
 

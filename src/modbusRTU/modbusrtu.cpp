@@ -127,7 +127,7 @@ std::array<std::array<bool, 2>, 2> modbusrtu::confidenceMatrix(const std::pair<u
 
 }
 
-std::vector<modbusrtu::modbusPdu> modbusrtu::analyzeCapture(const std::string &fileName) {
+std::vector<modbusrtu::modbusPdu> modbusrtu::lexCapture(const std::string &fileName) {
     auto worker1 = std::async(
         std::launch::async,
         &plausibleTwo,
@@ -143,8 +143,44 @@ std::vector<modbusrtu::modbusPdu> modbusrtu::analyzeCapture(const std::string &f
 
     const auto histoRes = worker1.get();
     const auto smartRes = worker2.get();
-    auto confidence = confidenceMatrix(histoRes, smartRes);
-
+    std::ifstream file(fileName, std::ios::binary);
+    if (histoRes.first == 248 || histoRes.second == 248 || smartRes.first == 248 || smartRes.second == 248 || !file) {
+        const devAddr eAddr = {
+            ModbusAddr(0),
+            "Error: No File Found"
+        };
+        const functionInfo eFunc = {
+            "Error: No File Found",
+            0x00,
+            modbusFunc::Unknown,
+            0,
+            0
+        };
+        modbusPdu errorPDU = {
+            eAddr,
+            eFunc,
+            {},
+            0x0000
+        };
+        return {errorPDU};
+    }
+    const auto confidence = confidenceMatrix(histoRes, smartRes);
+    std::array<uint8_t, 5> allowedValues{};
+    for (int i = 0; i < confidence.size(); i++) {
+        for (int j = 0; j < confidence[i].size(); j++) {
+            if (confidence[i][j] == 1) {
+                if (i == 0) {
+                    allowedValues[0] = histoRes.first;
+                } else if (i == 1) {
+                    allowedValues[1] = histoRes.second;
+                } else if (j == 1) {
+                    allowedValues[2] = smartRes.second;
+                } else {
+                    allowedValues[3] = smartRes.first;
+                }
+            }
+        }
+    }
 
 
     return {};
