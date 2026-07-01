@@ -21,7 +21,7 @@ void serialcap::start(unsigned int await, unsigned int chunkness) {
     this,
     await,
     chunkness
-);
+    );
 }
 
 auto serialcap::wait() -> std::expected<int, std::runtime_error> {

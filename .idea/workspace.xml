@@ -27,11 +27,11 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="lets begin modbus">
+    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="It should successfully identify any given request!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modbusRTU/modbusrtu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/modbusRTU/modbusrtu.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modbusRTU/modbusrtu.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/modbusRTU/modbusrtu.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/serialcap/serialcap.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/serialcap/serialcap.cpp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -132,7 +132,7 @@
       <workItem from="1782789165408" duration="5810000" />
       <workItem from="1782836816019" duration="11660000" />
       <workItem from="1782854802598" duration="10716000" />
-      <workItem from="1782924381246" duration="9641000" />
+      <workItem from="1782924381246" duration="13326000" />
     </task>
     <task id="LOCAL-00001" summary="its working now">
       <option name="closed" value="true" />
@@ -318,7 +318,15 @@
       <option name="project" value="LOCAL" />
       <updated>1782870146883</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="It should successfully identify any given request!">
+      <option name="closed" value="true" />
+      <created>1782934321279</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1782934321279</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -363,7 +371,8 @@
     <MESSAGE value="Oops got cpp not h" />
     <MESSAGE value="swap endianess" />
     <MESSAGE value="lets begin modbus" />
-    <option name="LAST_COMMIT_MESSAGE" value="lets begin modbus" />
+    <MESSAGE value="It should successfully identify any given request!" />
+    <option name="LAST_COMMIT_MESSAGE" value="It should successfully identify any given request!" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

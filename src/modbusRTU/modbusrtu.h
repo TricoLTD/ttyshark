@@ -11,8 +11,8 @@
 
 class ModbusAddr {
     public:
-    explicit ModbusAddr(const uint16_t Addr) {
-        if (Addr < 1 || Addr > 247) {
+    explicit ModbusAddr(const uint8_t Addr) {
+        if (Addr > 247) {
             throw std::out_of_range("Address Not Valid");
         }
     };
@@ -25,12 +25,127 @@ public:
         WriteSingleRegister, Diagnostics, GCEC, WriteMultipleCoils, WriteMultipleRegisters, ReportServerID,
         MaskWriteReg, ReadWriteMultipleReg, Unknown};
 
+    uint8_t broadcast_ = 0x00;
+
+    struct functionInfo {
+        std::string FunctionName;
+        uint8_t FunctionID;
+        modbusFunc FunctionType;
+        size_t RequestSize;
+        size_t ResponseSize;
+    };
+
+    static functionInfo getFunctionType(const uint8_t code) {
+        functionInfo value;
+        switch (code) {
+            case 0x01:
+                value.FunctionName = "Read Coils";
+                value.FunctionID = code;
+                value.FunctionType = modbusFunc::ReadCoils;
+                value.RequestSize = 8;
+                value.ResponseSize = 7;
+                break;
+            case 0x02:
+                value.FunctionName = "Read Discrete Inputs";
+                value.FunctionID = code;
+                value.FunctionType = modbusFunc::ReadDiscreteInputs;
+                value.RequestSize = 8;
+                value.ResponseSize = 7;
+                break;
+            case 0x03:
+                value.FunctionName = "Read Holding Registers";
+                value.FunctionID = code;
+                value.FunctionType = modbusFunc::ReadHoldingRegisters;
+                value.RequestSize = 8;
+                value.ResponseSize = 9;
+                break;
+            case 0x04:
+                value.FunctionName = "Read Input Registers";
+                value.FunctionID = code;
+                value.FunctionType = modbusFunc::ReadInputRegisters;
+                value.RequestSize = 8;
+                value.ResponseSize = 9;
+                break;
+            case 0x05:
+                value.FunctionName = "Write Single Coil";
+                value.FunctionID = code;
+                value.FunctionType = modbusFunc::WriteSingleCoil;
+                value.RequestSize = 8;
+                value.ResponseSize = 8;
+                break;
+            case 0x06:
+                value.FunctionName = "Write Single Register";
+                value.FunctionID = code;
+                value.FunctionType = modbusFunc::WriteSingleRegister;
+                value.RequestSize = 8;
+                value.ResponseSize = 8;
+                break;
+            case 0x08:
+                value.FunctionName = "Diagnostics";
+                value.FunctionID = code;
+                value.FunctionType = modbusFunc::Diagnostics;
+                value.RequestSize = 0;
+                value.ResponseSize = 0;
+                break;
+            case 0x0B:
+                value.FunctionName = "Get Comm Event Counter";
+                value.FunctionID = code;
+                value.FunctionType = modbusFunc::GCEC;
+                value.RequestSize = 0;
+                value.ResponseSize = 0;
+                break;
+            case 0x0F:
+                value.FunctionName = "Write Multiple Coils";
+                value.FunctionID = code;
+                value.FunctionType = modbusFunc::WriteMultipleCoils;
+                value.RequestSize = 11;
+                value.ResponseSize = 8;
+                break;
+            case 0x10:
+                value.FunctionName = "Write Multiple Registers";
+                value.FunctionID = code;
+                value.FunctionType = modbusFunc::WriteMultipleRegisters;
+                value.RequestSize = 13;
+                value.ResponseSize = 8;
+                break;
+            case 0x11:
+                value.FunctionName = "Report Server ID";
+                value.FunctionID = code;
+                value.FunctionType = modbusFunc::ReportServerID;
+                value.RequestSize = 0;
+                value.ResponseSize = 0;
+                break;
+            case 0x16:
+                value.FunctionName = "Mask Write Register";
+                value.FunctionID = code;
+                value.FunctionType = modbusFunc::ReadCoils;
+                value.RequestSize = 0;
+                value.ResponseSize = 0;
+                break;
+            case 0x17:
+                value.FunctionName = "Read/Write Multiple Registers";
+                value.FunctionID = code;
+                value.FunctionType = modbusFunc::ReadCoils;
+                value.RequestSize = 0;
+                value.ResponseSize = 0;
+                break;
+            default:
+                value.FunctionName = "Unknown Function";
+                value.FunctionID = code;
+                value.FunctionType = modbusFunc::Unknown;
+                value.RequestSize = 0;
+                value.ResponseSize = 0;
+                break;
+        }
+        return value;
+    }
+
     /**
      * PDU for modbus
      */
     struct modbusPdu {
         ModbusAddr Addr;
-        modbusFunc Func;
+        functionInfo Func;
         std::vector<uint8_t> Data;
         uint16_t CRC;
     };
@@ -60,8 +175,22 @@ public:
      */
     static std::pair<uint8_t, uint8_t> smartTwo(const std::string &fileName, int stride = 5);
 
+    /**
+     * Generate a confidence matrix of guesses to see if any align.
+     *
+     * @param guessSetone
+     * @param guessSettwo
+     * @return
+     */
     static std::array<ba2, 2> confidenceMatrix(const std::pair<uint8_t, uint8_t> &guessSetone, const std::pair<uint8_t, uint8_t> &guessSettwo);
 
+    /**
+     * Calculate a messages CRC
+     *
+     * @param buffer
+     * @param length
+     * @return
+     */
     static uint16_t crcCalculation(const uint8_t* buffer, int length) {
         uint16_t result = 0xFFFF;
 
@@ -83,6 +212,8 @@ public:
 
         return crc;
     }
+
+    static std::vector<modbusPdu> analyzeCapture(const std::string &fileName);
 
 };
 

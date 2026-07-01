@@ -4,6 +4,7 @@
 
 #include "modbusrtu.h"
 #include <fstream>
+#include <future>
 #include <iostream>
 
 
@@ -124,4 +125,27 @@ std::array<std::array<bool, 2>, 2> modbusrtu::confidenceMatrix(const std::pair<u
     return std::array{ba2{(guessSetone.first == guessSettwo.first), (guessSetone.first == guessSettwo.second)},
         ba2{(guessSetone.second == guessSettwo.first), (guessSetone.second == guessSettwo.second)}};
 
+}
+
+std::vector<modbusrtu::modbusPdu> modbusrtu::analyzeCapture(const std::string &fileName) {
+    auto worker1 = std::async(
+        std::launch::async,
+        &plausibleTwo,
+        fileName,
+        5
+    );
+    auto worker2 = std::async(
+    std::launch::async,
+    &smartTwo,
+    fileName,
+    5
+    );
+
+    const auto histoRes = worker1.get();
+    const auto smartRes = worker2.get();
+    auto confidence = confidenceMatrix(histoRes, smartRes);
+
+
+
+    return {};
 }
