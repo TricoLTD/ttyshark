@@ -6,6 +6,7 @@
 #include <fstream>
 #include <future>
 #include <iostream>
+#include <unordered_set>
 
 
 std::pair<uint8_t, uint8_t> modbusrtu::plausibleTwo(const std::string &fileName, std::size_t stride) {
@@ -128,6 +129,7 @@ std::array<std::array<bool, 2>, 2> modbusrtu::confidenceMatrix(const std::pair<u
 }
 
 std::vector<modbusrtu::modbusPdu> modbusrtu::lexCapture(const std::string &fileName) {
+    std::vector<modbusrtu::modbusPdu> returnable = {};
     auto worker1 = std::async(
         std::launch::async,
         &plausibleTwo,
@@ -143,6 +145,7 @@ std::vector<modbusrtu::modbusPdu> modbusrtu::lexCapture(const std::string &fileN
 
     const auto histoRes = worker1.get();
     const auto smartRes = worker2.get();
+    std::pmr::unordered_set<uint8_t> checkValues = {histoRes.first, histoRes.second, smartRes.first, smartRes.second, 0x00};
     std::ifstream file(fileName, std::ios::binary);
     if (histoRes.first == 248 || histoRes.second == 248 || smartRes.first == 248 || smartRes.second == 248 || !file) {
         const devAddr eAddr = {
@@ -160,28 +163,58 @@ std::vector<modbusrtu::modbusPdu> modbusrtu::lexCapture(const std::string &fileN
             eAddr,
             eFunc,
             {},
-            0x0000
+            0x0000,
+            true
         };
         return {errorPDU};
     }
-    const auto confidence = confidenceMatrix(histoRes, smartRes);
-    std::array<uint8_t, 5> allowedValues{};
-    for (int i = 0; i < confidence.size(); i++) {
-        for (int j = 0; j < confidence[i].size(); j++) {
-            if (confidence[i][j] == 1) {
-                if (i == 0) {
-                    allowedValues[0] = histoRes.first;
-                } else if (i == 1) {
-                    allowedValues[1] = histoRes.second;
-                } else if (j == 1) {
-                    allowedValues[2] = smartRes.second;
-                } else {
-                    allowedValues[3] = smartRes.first;
+    std::vector<uint8_t> bytes{std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>()};
+    size_t start = 0;
+    while (!checkValues.contains(bytes.at(start))) {
+        start++;
+    }
+
+    for (size_t iter = start; iter < bytes.size(); iter++) {
+        if (checkValues.contains(bytes.at(iter))) {
+            if (iter + 1 < bytes.size()) {
+                uint8_t fCode = bytes.at(iter + 1);
+                auto addr = ModbusAddr(bytes.at(iter));
+                devAddr dAddr = {
+                    addr,
+                    addr.getName()
+                };
+                functionInfo function = getFunctionType(fCode);
+                modbusPdu wPdu{
+                    dAddr,
+                    function,
+                    {},
+                    0x0000,
+                    true
+                };
+                if (function.RequestSize == 0 || function.ResponseSize == 0) {
+                    // do something like go to the next request/response
+                }
+                if (iter + function.RequestSize < bytes.size()) {
+                    std::vector<uint8_t> body;
+                    for (size_t inner = iter; inner < function.RequestSize - 2; inner++) {
+                        body.push_back(bytes.at(inner));
+                    }
+                    uint8_t crcGuess = crcCalculation(body.data(), body.size());
+                    uint8_t crcLow = bytes.at(iter + (function.RequestSize - 1));
+                    uint8_t crcHigh = bytes.at(iter + function.RequestSize);
+                    uint16_t crc = (crcLow << 8) | crcHigh;
+                    if (crc == crcGuess) {
+                        wPdu.Data = body;
+                        wPdu.CRC = crc;
+                        returnable.push_back(wPdu);
+                        iter += function.RequestSize;
+                    } else {
+
+                    }
                 }
             }
         }
     }
 
-
-    return {};
+    return returnable;
 }

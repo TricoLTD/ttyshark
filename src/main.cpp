@@ -56,7 +56,14 @@ int main() {
 
     printf("\n\n\n");
 
-    start = std::chrono::high_resolution_clock::now();
+    try {
+        auto results = modbusrtu::lexCapture("./cap.bin");
+        printf("Amount Seen: %lu\n", results.size());
+    } catch (std::out_of_range e) {
+        printf(e.what());
+    }
+
+    /*start = std::chrono::high_resolution_clock::now();
     addresses = modbusrtu::plausibleTwo("./cap2.bin");
     end = std::chrono::high_resolution_clock::now();
 
@@ -126,7 +133,7 @@ int main() {
             printf("   %d   ", val);
         }
         printf("\n");
-    }
+    }*/
 
     return 1;
 }

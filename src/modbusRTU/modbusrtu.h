@@ -17,7 +17,7 @@ class ModbusAddr {
     public:
     explicit ModbusAddr(const uint8_t Addr) : Address(Addr) {
         if (Addr > 247) {
-            throw std::out_of_range("Address Not Valid");
+            throw std::out_of_range(std::format("Address was not valid {:x}", Addr));
         }
     };
 
@@ -167,6 +167,7 @@ public:
         functionInfo Func;
         std::vector<uint8_t> Data;
         uint16_t CRC;
+        bool Request;
     };
 
     /**
