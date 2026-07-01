@@ -6,6 +6,7 @@
     "include": [
         "cmake-build-debug/build/Debug/generators/CMakePresets.json",
         "cmake-build-debug/build/Release/generators/CMakePresets.json",
+        "build/build/Release/generators/CMakePresets.json",
         "build/Release/generators/CMakePresets.json"
     ]
 }

@@ -5,67 +5,49 @@
 #ifndef TTYSHARK_MODBUSRTU_H
 #define TTYSHARK_MODBUSRTU_H
 #include <cstdint>
-#include <variant>
+#include <stdexcept>
 #include <vector>
 
+class ModbusAddr {
+    public:
+    explicit ModbusAddr(const uint16_t Addr) {
+        if (Addr < 1 || Addr > 247) {
+            throw std::out_of_range("Address Not Valid");
+        }
+    };
+};
 
 class modbusrtu {
-    struct ReadCoilsRequest {
-        uint8_t slave;
-        uint16_t start;
-        uint16_t quantity;
+public:
+    enum class modbusFunc {ReadCoils, ReadDiscreteInputs, ReadHoldingRegisters, ReadInputRegisters, WriteSingleCoil,
+        WriteSingleRegister, Diagnostics, GCEC, WriteMultipleCoils, WriteMultipleRegisters, ReportServerID,
+        MaskWriteReg, ReadWriteMultipleReg, Unknown};
+
+    /**
+     * PDU for modbus
+     */
+    struct modbusPdu {
+        ModbusAddr Addr;
+        modbusFunc Func;
+        std::vector<uint8_t> Data;
+        uint16_t CRC;
     };
 
-    struct ReadHoldingRegistersRequest {
-        uint8_t slave;
-        uint16_t start;
-        uint16_t quantity;
+    struct stringifyPdu {
+        std::string Addr;
+        std::string Func;
+        std::string Data;
+        std::string CRC;
     };
 
-    struct ReadHoldingRegistersResponse {
-        uint8_t slave;
-        std::vector<uint16_t> registers;
-    };
+    /**
+     * Guess two plausible addresses
+     *
+     * @param fileName
+     * @return
+     */
+    static std::pair<uint8_t, uint8_t> plausibleTwo(const std::string &fileName, std::size_t stride);
 
-    struct WriteSingleRegisterRequest {
-        uint8_t slave;
-        uint16_t address;
-        uint16_t value;
-    };
-
-    struct WriteMultipleRegistersRequest {
-        uint8_t slave;
-        uint16_t address;
-        std::vector<uint16_t> values;
-    };
-
-    struct ExceptionResponse {
-        uint8_t slave;
-        uint8_t function;
-        uint8_t exception;
-    };
-
-    struct UnknownFunction {
-        uint8_t slave;
-        uint8_t function;
-        std::vector<std::byte> payload;
-    };
-
-    using Pdu = std::variant<
-            ReadCoilsRequest,
-            ReadHoldingRegistersRequest,
-            ReadHoldingRegistersResponse,
-            WriteSingleRegisterRequest,
-            ExceptionResponse,
-            UnknownFunction
-    >;
-
-    struct ParseResult {
-        bool valid_crc;
-        uint8_t addr;
-        uint8_t function;
-        Pdu payload;
-    };
 };
 
 

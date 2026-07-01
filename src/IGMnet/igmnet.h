@@ -1,4 +1,4 @@
-#ifdef TTYSHARK_IGMNET_H
+#ifndef TTYSHARK_IGMNET_H
 #define TTYSHARK_IGMNET_H
 #include <cstdint>
 #include <variant>
@@ -48,7 +48,7 @@ class igm_commands {
     };
     // Variable length response
     struct get_alarm_values_variable {
-        uint16_t command = 0xBC
+        uint16_t command = 0xBC;
     };
     struct get_control_values {
         uint16_t command = 0xBD;
@@ -69,7 +69,7 @@ class igm_commands {
     struct set_temp_tolerance {
         uint16_t command = 0x81;
         uint16_t temp_tolerance;
-    }
+    };
 };
 
 
