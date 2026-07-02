@@ -17,7 +17,7 @@ class ModbusAddr {
     public:
     explicit ModbusAddr(const uint8_t Addr) : Address(Addr) {
         if (Addr > 247) {
-            throw std::out_of_range(std::format("Address was not valid {:x}", Addr));
+            throw std::out_of_range(std::format("Address was not valid 0x{:02X}", Addr));
         }
     };
 
@@ -29,7 +29,7 @@ class ModbusAddr {
                 return "Global/Broadcast 0x00";
                 break;
             default:
-                return std::format("Device {:x}", Address);
+                return std::format("Device 0x{:02X}", Address);
         }
     }
 };
@@ -58,98 +58,98 @@ public:
         functionInfo value;
         switch (code) {
             case 0x01:
-                value.FunctionName = "Read Coils";
+                value.FunctionName = std::format("Read Coils 0x{:02X}", code);
                 value.FunctionID = code;
                 value.FunctionType = modbusFunc::ReadCoils;
                 value.RequestSize = 8;
                 value.ResponseSize = 7;
                 break;
             case 0x02:
-                value.FunctionName = "Read Discrete Inputs";
+                value.FunctionName = std::format("Read Discrete Inputs 0x{:02X}", code);
                 value.FunctionID = code;
                 value.FunctionType = modbusFunc::ReadDiscreteInputs;
                 value.RequestSize = 8;
                 value.ResponseSize = 7;
                 break;
             case 0x03:
-                value.FunctionName = "Read Holding Registers";
+                value.FunctionName = std::format("Read Holding Registers 0x{:02X}", code);
                 value.FunctionID = code;
                 value.FunctionType = modbusFunc::ReadHoldingRegisters;
                 value.RequestSize = 8;
                 value.ResponseSize = 9;
                 break;
             case 0x04:
-                value.FunctionName = "Read Input Registers";
+                value.FunctionName = std::format("Read Input Registers 0x{:02X}", code);
                 value.FunctionID = code;
                 value.FunctionType = modbusFunc::ReadInputRegisters;
                 value.RequestSize = 8;
                 value.ResponseSize = 9;
                 break;
             case 0x05:
-                value.FunctionName = "Write Single Coil";
+                value.FunctionName = std::format("Write Single Coil 0x{:02X}", code);
                 value.FunctionID = code;
                 value.FunctionType = modbusFunc::WriteSingleCoil;
                 value.RequestSize = 8;
                 value.ResponseSize = 8;
                 break;
             case 0x06:
-                value.FunctionName = "Write Single Register";
+                value.FunctionName = std::format("Write Single Register 0x{:02X}", code);
                 value.FunctionID = code;
                 value.FunctionType = modbusFunc::WriteSingleRegister;
                 value.RequestSize = 8;
                 value.ResponseSize = 8;
                 break;
             case 0x08:
-                value.FunctionName = "Diagnostics";
+                value.FunctionName = std::format("Diagnostics 0x{:02X}", code);
                 value.FunctionID = code;
                 value.FunctionType = modbusFunc::Diagnostics;
                 value.RequestSize = 0;
                 value.ResponseSize = 0;
                 break;
             case 0x0B:
-                value.FunctionName = "Get Comm Event Counter";
+                value.FunctionName = std::format("Get Comm Event Counter 0x{:02X}", code);
                 value.FunctionID = code;
                 value.FunctionType = modbusFunc::GCEC;
                 value.RequestSize = 0;
                 value.ResponseSize = 0;
                 break;
             case 0x0F:
-                value.FunctionName = "Write Multiple Coils";
+                value.FunctionName = std::format("Write Multiple Coils 0x{:02X}", code);
                 value.FunctionID = code;
                 value.FunctionType = modbusFunc::WriteMultipleCoils;
                 value.RequestSize = 11;
                 value.ResponseSize = 8;
                 break;
             case 0x10:
-                value.FunctionName = "Write Multiple Registers";
+                value.FunctionName = std::format("Write Multiple Registers 0x{:02X}", code);
                 value.FunctionID = code;
                 value.FunctionType = modbusFunc::WriteMultipleRegisters;
                 value.RequestSize = 13;
                 value.ResponseSize = 8;
                 break;
             case 0x11:
-                value.FunctionName = "Report Server ID";
+                value.FunctionName = std::format("Report Server ID 0x{:02X}", code);
                 value.FunctionID = code;
                 value.FunctionType = modbusFunc::ReportServerID;
                 value.RequestSize = 0;
                 value.ResponseSize = 0;
                 break;
             case 0x16:
-                value.FunctionName = "Mask Write Register";
+                value.FunctionName = std::format("Mask Write Register 0x{:02X}", code);
                 value.FunctionID = code;
                 value.FunctionType = modbusFunc::ReadCoils;
                 value.RequestSize = 0;
                 value.ResponseSize = 0;
                 break;
             case 0x17:
-                value.FunctionName = "Read/Write Multiple Registers";
+                value.FunctionName = std::format("Read/Write Multiple Registers 0x{:02X}", code);
                 value.FunctionID = code;
                 value.FunctionType = modbusFunc::ReadCoils;
                 value.RequestSize = 0;
                 value.ResponseSize = 0;
                 break;
             default:
-                value.FunctionName = "Unknown Function";
+                value.FunctionName = std::format("Unknown Function 0x{:02X}", code);
                 value.FunctionID = code;
                 value.FunctionType = modbusFunc::Unknown;
                 value.RequestSize = 0;
@@ -178,6 +178,7 @@ public:
         std::string Func;
         std::string Data;
         std::string CRC;
+        std::string type;
     };
 
     /**
@@ -242,7 +243,8 @@ public:
      * @return
      */
     static std::vector<modbusPdu> lexCapture(const std::string &fileName);
-
+    static std::vector<stringifyPdu> stringify(std::vector<modbusPdu> input);
+    static void prettyPrint(const stringifyPdu &pdu);
 };
 
 

@@ -56,11 +56,13 @@ int main() {
 
     printf("\n\n\n");
 
-    try {
-        auto results = modbusrtu::lexCapture("./cap.bin");
-        printf("Amount Seen: %lu\n", results.size());
-    } catch (std::out_of_range e) {
-        printf(e.what());
+
+    auto results = modbusrtu::lexCapture("./cap.bin");
+    printf("Amount Seen: %lu\n", results.size());
+    std::vector<modbusrtu::stringifyPdu> strung = modbusrtu::stringify(results);
+    for (auto str : strung) {
+        modbusrtu::prettyPrint(str);
+        printf("\n");
     }
 
     /*start = std::chrono::high_resolution_clock::now();

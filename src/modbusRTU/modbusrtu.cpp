@@ -55,9 +55,9 @@ std::pair<uint8_t, uint8_t> modbusrtu::smartTwo(const std::string &fileName, int
     const std::vector<uint8_t> dataBuffer{std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>()};
     std::pair<uint8_t, int> address = {0, -1000};
     std::pair<uint8_t, int> address2 = {0, -1000};
-    
+
     size_t maxOffset = std::min<size_t>(stride, dataBuffer.size());
-    
+
     for (size_t offset = 0; offset < maxOffset; offset++) {
         for (size_t iter = offset; iter < dataBuffer.size(); iter++) {
             uint8_t candidate = dataBuffer.at(iter);
@@ -78,10 +78,12 @@ std::pair<uint8_t, uint8_t> modbusrtu::smartTwo(const std::string &fileName, int
                         case 0x04:
                         case 0x05:
                         case 0x0F:
-                        case 0x10:
-                        {
+                        case 0x10: {
                             if (dataBuffer.size() > iter + 7) {
-                                uint8_t msgCnt[] = {candidate, function, dataBuffer.at(iter + 2), dataBuffer.at(iter + 3), dataBuffer.at(iter + 4), dataBuffer.at(iter + 5)};
+                                uint8_t msgCnt[] = {
+                                    candidate, function, dataBuffer.at(iter + 2), dataBuffer.at(iter + 3),
+                                    dataBuffer.at(iter + 4), dataBuffer.at(iter + 5)
+                                };
                                 uint8_t crcLow = dataBuffer.at(iter + 6);
                                 uint8_t crcHigh = dataBuffer.at(iter + 7);
                                 uint16_t crc = (crcLow << 8) | crcHigh;
@@ -101,7 +103,6 @@ std::pair<uint8_t, uint8_t> modbusrtu::smartTwo(const std::string &fileName, int
                             score -= 5;
                             break;
                     }
-
                 }
                 if (candidate == address.first) {
                     if (score > address.second) {
@@ -110,8 +111,7 @@ std::pair<uint8_t, uint8_t> modbusrtu::smartTwo(const std::string &fileName, int
                 } else if (score > address.second) {
                     address2 = address;
                     address = {candidate, score};
-                }
-                else if (candidate != address2.first && score > address2.second) {
+                } else if (candidate != address2.first && score > address2.second) {
                     address2 = {candidate, score};
                 }
             }
@@ -122,10 +122,11 @@ std::pair<uint8_t, uint8_t> modbusrtu::smartTwo(const std::string &fileName, int
 }
 
 std::array<std::array<bool, 2>, 2> modbusrtu::confidenceMatrix(const std::pair<uint8_t, uint8_t> &guessSetone,
-    const std::pair<uint8_t, uint8_t> &guessSettwo) {
-    return std::array{ba2{(guessSetone.first == guessSettwo.first), (guessSetone.first == guessSettwo.second)},
-        ba2{(guessSetone.second == guessSettwo.first), (guessSetone.second == guessSettwo.second)}};
-
+                                                               const std::pair<uint8_t, uint8_t> &guessSettwo) {
+    return std::array{
+        ba2{(guessSetone.first == guessSettwo.first), (guessSetone.first == guessSettwo.second)},
+        ba2{(guessSetone.second == guessSettwo.first), (guessSetone.second == guessSettwo.second)}
+    };
 }
 
 std::vector<modbusrtu::modbusPdu> modbusrtu::lexCapture(const std::string &fileName) {
@@ -137,15 +138,17 @@ std::vector<modbusrtu::modbusPdu> modbusrtu::lexCapture(const std::string &fileN
         5
     );
     auto worker2 = std::async(
-    std::launch::async,
-    &smartTwo,
-    fileName,
-    5
+        std::launch::async,
+        &smartTwo,
+        fileName,
+        5
     );
 
     const auto histoRes = worker1.get();
     const auto smartRes = worker2.get();
-    std::pmr::unordered_set<uint8_t> checkValues = {histoRes.first, histoRes.second, smartRes.first, smartRes.second, 0x00};
+    std::pmr::unordered_set<uint8_t> checkValues = {
+        histoRes.first, histoRes.second, smartRes.first, smartRes.second //, 0x00
+    };
     std::ifstream file(fileName, std::ios::binary);
     if (histoRes.first == 248 || histoRes.second == 248 || smartRes.first == 248 || smartRes.second == 248 || !file) {
         const devAddr eAddr = {
@@ -169,15 +172,21 @@ std::vector<modbusrtu::modbusPdu> modbusrtu::lexCapture(const std::string &fileN
         return {errorPDU};
     }
     std::vector<uint8_t> bytes{std::istreambuf_iterator<char>(file), std::istreambuf_iterator<char>()};
+    for (size_t i = 0; i + 1 < bytes.size(); i += 2) {
+        std::swap(bytes[i], bytes[i + 1]);
+    }
     size_t start = 0;
-    while (!checkValues.contains(bytes.at(start))) {
+    while (start < bytes.size() && !checkValues.contains(bytes.at(start))) {
         start++;
     }
+    //printf("starting from: %lu\n\nnumber of bytes: %lu\n\n", start, bytes.size());
+    if (start >= bytes.size()) return {};
 
     for (size_t iter = start; iter < bytes.size(); iter++) {
         if (checkValues.contains(bytes.at(iter))) {
             if (iter + 1 < bytes.size()) {
                 uint8_t fCode = bytes.at(iter + 1);
+                //printf("Function: %#x   Address: %#x\n", fCode, bytes.at(iter));
                 auto addr = ModbusAddr(bytes.at(iter));
                 devAddr dAddr = {
                     addr,
@@ -191,25 +200,76 @@ std::vector<modbusrtu::modbusPdu> modbusrtu::lexCapture(const std::string &fileN
                     0x0000,
                     true
                 };
-                if (function.RequestSize == 0 || function.ResponseSize == 0) {
-                    // do something like go to the next request/response
+                if (function.RequestSize == 0) {
+                    continue;
                 }
-                if (iter + function.RequestSize < bytes.size()) {
+                if (iter + function.RequestSize <= bytes.size()) {
+                    //printf("Testing Request \n");
                     std::vector<uint8_t> body;
-                    for (size_t inner = iter; inner < function.RequestSize - 2; inner++) {
+                    for (size_t inner = iter; inner < iter + function.RequestSize - 2; inner++) {
                         body.push_back(bytes.at(inner));
                     }
-                    uint8_t crcGuess = crcCalculation(body.data(), body.size());
-                    uint8_t crcLow = bytes.at(iter + (function.RequestSize - 1));
-                    uint8_t crcHigh = bytes.at(iter + function.RequestSize);
+                    //printf("Body (%zu bytes): ", body.size());
+                    //for (auto b : body)
+                   //     printf("%02X ", b);
+                    //printf("\n");
+                    uint16_t crcGuess = crcCalculation(body.data(), body.size());
+                    uint8_t crcLow = bytes.at(iter + (function.RequestSize - 2));
+                    uint8_t crcHigh = bytes.at(iter + function.RequestSize - 1);
                     uint16_t crc = (crcLow << 8) | crcHigh;
+                   // printf("Expected CRC %04x  Computed %04x\n", crc, crcGuess);
                     if (crc == crcGuess) {
                         wPdu.Data = body;
                         wPdu.CRC = crc;
                         returnable.push_back(wPdu);
                         iter += function.RequestSize;
+                        //printf("Attempted Push_Back \n");
                     } else {
-
+                        if (iter + function.ResponseSize < bytes.size()) {
+                            //printf("Testing Response \n");
+                            std::vector<uint8_t> body2;
+                            for (size_t inner = iter; inner < iter + function.ResponseSize - 2; inner++) {
+                                body2.push_back(bytes.at(inner));
+                            }
+                            //printf("Body (%zu bytes): ", body2.size());
+                           // for (auto b : body2)
+                            //    printf("%02X ", b);
+                            //printf("\n");
+                            uint16_t crcGuess2 = crcCalculation(body2.data(), body2.size());
+                            uint8_t crcLow2 = bytes.at(iter + (function.ResponseSize - 2));
+                            uint8_t crcHigh2 = bytes.at(iter + function.ResponseSize - 1);
+                            uint16_t crc2 = (crcLow2 << 8) | crcHigh2;
+                            //printf("Expected CRC %04x  Computed %04x\n", crc2, crcGuess2);
+                            if (crc2 == crcGuess2) {
+                                wPdu.Data = body2;
+                                wPdu.CRC = crc2;
+                                returnable.push_back(wPdu);
+                                iter += function.ResponseSize;
+                                //printf("Attempted Push_Back \n");
+                            }
+                        }
+                    }
+                } else if (iter + function.ResponseSize <= bytes.size()) {
+                    //printf("Testing Response \n");
+                    std::vector<uint8_t> body;
+                    for (size_t inner = iter; inner < iter + function.ResponseSize - 2; inner++) {
+                        body.push_back(bytes.at(inner));
+                    }
+                    //printf("Body (%zu bytes): ", body.size());
+                    //for (auto b : body)
+                        //printf("%02X ", b);
+                    //printf("\n");
+                    uint16_t crcGuess = crcCalculation(body.data(), body.size());
+                    uint8_t crcLow = bytes.at(iter + (function.ResponseSize - 2));
+                    uint8_t crcHigh = bytes.at(iter + function.ResponseSize - 1);
+                    uint16_t crc = (crcLow << 8) | crcHigh;
+                    //printf("Expected CRC %04x  Computed %04x\n", crc, crcGuess);
+                    if (crc == crcGuess)  {
+                        wPdu.Data = body;
+                        wPdu.CRC = crc;
+                        returnable.push_back(wPdu);
+                        iter += function.ResponseSize;
+                        //printf("Attempted Push_Back \n");
                     }
                 }
             }
@@ -218,3 +278,45 @@ std::vector<modbusrtu::modbusPdu> modbusrtu::lexCapture(const std::string &fileN
 
     return returnable;
 }
+
+std::vector<modbusrtu::stringifyPdu> modbusrtu::stringify(std::vector<modbusPdu> input) {
+    std::vector<modbusrtu::stringifyPdu> returnable;
+    for (auto [Addr, Func, Data, CRC, Request] : input) {
+        stringifyPdu strung = {
+            Addr.modbusAddr.getName(),
+            Func.FunctionName,
+            "",
+            std::format("CRC: 0x{:04X}", CRC),
+            "request"
+        };
+        std::string constructor;
+        constructor.reserve(Data.size()*2);
+        for (uint8_t byte : Data) {
+            constructor.append(std::format("0x{:02X} ", byte));
+        }
+        strung.Data = constructor;
+        if (!Request) {
+            strung.type = "response";
+        }
+        returnable.push_back(strung);
+    }
+    return returnable;
+}
+
+void modbusrtu::prettyPrint(const stringifyPdu &pdu) {
+    printf(pdu.Addr.c_str());
+    printf("    ");
+    printf(pdu.Func.c_str());
+    printf("\n");
+    printf("|---");
+    printf(pdu.Data.c_str());
+    printf("\n");
+    printf("|---");
+    printf(pdu.CRC.c_str());
+    printf("\n");
+    printf("|---");
+    printf(pdu.type.c_str());
+    printf("\n");
+}
+
+

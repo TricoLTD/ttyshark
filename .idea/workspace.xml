@@ -27,8 +27,10 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="Im taking a lunch break">
+    <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="it works to print modbus">
+      <change afterPath="$PROJECT_DIR$/output.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeUserPresets.json" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeUserPresets.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modbusRTU/modbusrtu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/modbusRTU/modbusrtu.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modbusRTU/modbusrtu.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/modbusRTU/modbusrtu.h" afterDir="false" />
@@ -128,7 +130,7 @@
       <workItem from="1782836816019" duration="11660000" />
       <workItem from="1782854802598" duration="10716000" />
       <workItem from="1782924381246" duration="16749000" />
-      <workItem from="1782942470858" duration="3038000" />
+      <workItem from="1782942470858" duration="8577000" />
     </task>
     <task id="LOCAL-00001" summary="its working now">
       <option name="closed" value="true" />
@@ -338,7 +340,15 @@
       <option name="project" value="LOCAL" />
       <updated>1782939719567</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="further along but there is a bug somewhere">
+      <option name="closed" value="true" />
+      <created>1782945532854</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1782945532854</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -362,7 +372,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="its working now" />
     <MESSAGE value="its working now on linux target" />
     <MESSAGE value="backbone serialcap and configure modbus" />
     <MESSAGE value="oops deleted a bracket" />
@@ -386,7 +395,9 @@
     <MESSAGE value="It should successfully identify any given request!" />
     <MESSAGE value="My previous commit was inaccurate it can figure out the address sometimes" />
     <MESSAGE value="Im taking a lunch break" />
-    <option name="LAST_COMMIT_MESSAGE" value="Im taking a lunch break" />
+    <MESSAGE value="further along but there is a bug somewhere" />
+    <MESSAGE value="it works to print modbus" />
+    <option name="LAST_COMMIT_MESSAGE" value="it works to print modbus" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
