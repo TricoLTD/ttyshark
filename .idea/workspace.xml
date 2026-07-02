@@ -28,12 +28,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="52491197-1477-44a1-b629-9a65ebefc233" name="Changes" comment="it works to print modbus">
-      <change afterPath="$PROJECT_DIR$/output.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeUserPresets.json" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeUserPresets.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/modbusRTU/modbusrtu.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/modbusRTU/modbusrtu.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/modbusRTU/modbusrtu.h" beforeDir="false" afterPath="$PROJECT_DIR$/src/modbusRTU/modbusrtu.h" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,7 +127,7 @@
       <workItem from="1782836816019" duration="11660000" />
       <workItem from="1782854802598" duration="10716000" />
       <workItem from="1782924381246" duration="16749000" />
-      <workItem from="1782942470858" duration="8577000" />
+      <workItem from="1782942470858" duration="10452000" />
     </task>
     <task id="LOCAL-00001" summary="its working now">
       <option name="closed" value="true" />
@@ -348,7 +345,15 @@
       <option name="project" value="LOCAL" />
       <updated>1782945532854</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="it works to print modbus">
+      <option name="closed" value="true" />
+      <created>1782957066449</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1782957066449</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

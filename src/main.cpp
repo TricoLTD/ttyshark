@@ -66,13 +66,13 @@ int main() {
     }
 
     /*start = std::chrono::high_resolution_clock::now();
-    addresses = modbusrtu::plausibleTwo("./cap2.bin");
+    addresses = modbusrtu::plausibleTwo("./cap.bin");
     end = std::chrono::high_resolution_clock::now();
 
     addr1 = addresses.first;
     addr2 = addresses.second;
 
-    printf("cap2.bin Histogram Guesses\n");
+    printf("cap.bin Histogram Guesses\n");
     printf("Guessed Addr1: %#x\n", addr1);
     printf("Guessed Addr2: %#x\n", addr2);
 
@@ -81,7 +81,7 @@ int main() {
     printf("Smart Search\n");
 
     start = std::chrono::high_resolution_clock::now();
-    addresses2 = modbusrtu::smartTwo("./cap2.bin");
+    addresses2 = modbusrtu::smartTwo("./cap.bin");
     end = std::chrono::high_resolution_clock::now();
 
     addr1 = addresses2.first;
@@ -103,13 +103,13 @@ int main() {
     printf("\n\n\n");
 
     start = std::chrono::high_resolution_clock::now();
-    addresses = modbusrtu::plausibleTwo("./cap3.bin");
+    addresses = modbusrtu::plausibleTwo("./cap.bin");
     end = std::chrono::high_resolution_clock::now();
 
     addr1 = addresses.first;
     addr2 = addresses.second;
 
-    printf("cap3.bin Histogram Guesses\n");
+    printf("cap.bin Histogram Guesses\n");
     printf("Guessed Addr1: %#x\n", addr1);
     printf("Guessed Addr2: %#x\n", addr2);
 
@@ -118,7 +118,7 @@ int main() {
     printf("Smart Search\n");
 
     start = std::chrono::high_resolution_clock::now();
-    addresses2 = modbusrtu::smartTwo("./cap3.bin");
+    addresses2 = modbusrtu::smartTwo("./cap.bin");
     end = std::chrono::high_resolution_clock::now();
 
     addr1 = addresses2.first;

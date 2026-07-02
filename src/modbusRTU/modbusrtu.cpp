@@ -211,65 +211,75 @@ std::vector<modbusrtu::modbusPdu> modbusrtu::lexCapture(const std::string &fileN
                     }
                     //printf("Body (%zu bytes): ", body.size());
                     //for (auto b : body)
-                   //     printf("%02X ", b);
+                    //     printf("%02X ", b);
                     //printf("\n");
                     uint16_t crcGuess = crcCalculation(body.data(), body.size());
                     uint8_t crcLow = bytes.at(iter + (function.RequestSize - 2));
                     uint8_t crcHigh = bytes.at(iter + function.RequestSize - 1);
                     uint16_t crc = (crcLow << 8) | crcHigh;
-                   // printf("Expected CRC %04x  Computed %04x\n", crc, crcGuess);
+                    // printf("Expected CRC %04x  Computed %04x\n", crc, crcGuess);
                     if (crc == crcGuess) {
                         wPdu.Data = body;
                         wPdu.CRC = crc;
                         returnable.push_back(wPdu);
-                        iter += function.RequestSize;
+                        iter += function.RequestSize - 1;
                         //printf("Attempted Push_Back \n");
                     } else {
-                        if (iter + function.ResponseSize < bytes.size()) {
-                            //printf("Testing Response \n");
+                        //printf("Testing Response \n");
+                        for (size_t responseSize = function.ResponseSize;
+                             iter + responseSize <= 256 && iter + responseSize <= bytes.size();
+                             responseSize++) {
                             std::vector<uint8_t> body2;
-                            for (size_t inner = iter; inner < iter + function.ResponseSize - 2; inner++) {
+                            for (size_t inner = iter; inner < iter + responseSize - 2; inner++) {
                                 body2.push_back(bytes.at(inner));
                             }
                             //printf("Body (%zu bytes): ", body2.size());
-                           // for (auto b : body2)
+                            // for (auto b : body2)
                             //    printf("%02X ", b);
                             //printf("\n");
                             uint16_t crcGuess2 = crcCalculation(body2.data(), body2.size());
-                            uint8_t crcLow2 = bytes.at(iter + (function.ResponseSize - 2));
-                            uint8_t crcHigh2 = bytes.at(iter + function.ResponseSize - 1);
+                            uint8_t crcLow2 = bytes.at(iter + (responseSize - 2));
+                            uint8_t crcHigh2 = bytes.at(iter + responseSize - 1);
                             uint16_t crc2 = (crcLow2 << 8) | crcHigh2;
                             //printf("Expected CRC %04x  Computed %04x\n", crc2, crcGuess2);
                             if (crc2 == crcGuess2) {
                                 wPdu.Data = body2;
                                 wPdu.CRC = crc2;
+                                wPdu.Request = false;
                                 returnable.push_back(wPdu);
-                                iter += function.ResponseSize;
+                                iter += responseSize - 1;
                                 //printf("Attempted Push_Back \n");
+                                break;
                             }
                         }
                     }
                 } else if (iter + function.ResponseSize <= bytes.size()) {
                     //printf("Testing Response \n");
-                    std::vector<uint8_t> body;
-                    for (size_t inner = iter; inner < iter + function.ResponseSize - 2; inner++) {
-                        body.push_back(bytes.at(inner));
-                    }
-                    //printf("Body (%zu bytes): ", body.size());
-                    //for (auto b : body)
-                        //printf("%02X ", b);
-                    //printf("\n");
-                    uint16_t crcGuess = crcCalculation(body.data(), body.size());
-                    uint8_t crcLow = bytes.at(iter + (function.ResponseSize - 2));
-                    uint8_t crcHigh = bytes.at(iter + function.ResponseSize - 1);
-                    uint16_t crc = (crcLow << 8) | crcHigh;
-                    //printf("Expected CRC %04x  Computed %04x\n", crc, crcGuess);
-                    if (crc == crcGuess)  {
-                        wPdu.Data = body;
-                        wPdu.CRC = crc;
-                        returnable.push_back(wPdu);
-                        iter += function.ResponseSize;
-                        //printf("Attempted Push_Back \n");
+                    for (size_t responseSize = function.ResponseSize;
+                         iter + responseSize <= 256 && iter + responseSize <= bytes.size();
+                         responseSize++) {
+                        std::vector<uint8_t> body2;
+                        for (size_t inner = iter; inner < iter + responseSize - 2; inner++) {
+                            body2.push_back(bytes.at(inner));
+                        }
+                        //printf("Body (%zu bytes): ", body2.size());
+                        // for (auto b : body2)
+                        //    printf("%02X ", b);
+                        //printf("\n");
+                        uint16_t crcGuess2 = crcCalculation(body2.data(), body2.size());
+                        uint8_t crcLow2 = bytes.at(iter + (responseSize - 2));
+                        uint8_t crcHigh2 = bytes.at(iter + responseSize - 1);
+                        uint16_t crc2 = (crcLow2 << 8) | crcHigh2;
+                        //printf("Expected CRC %04x  Computed %04x\n", crc2, crcGuess2);
+                        if (crc2 == crcGuess2) {
+                            wPdu.Data = body2;
+                            wPdu.CRC = crc2;
+                            wPdu.Request = false;
+                            returnable.push_back(wPdu);
+                            iter += responseSize - 1;
+                            //printf("Attempted Push_Back \n");
+                            break;
+                        }
                     }
                 }
             }
@@ -281,7 +291,7 @@ std::vector<modbusrtu::modbusPdu> modbusrtu::lexCapture(const std::string &fileN
 
 std::vector<modbusrtu::stringifyPdu> modbusrtu::stringify(std::vector<modbusPdu> input) {
     std::vector<modbusrtu::stringifyPdu> returnable;
-    for (auto [Addr, Func, Data, CRC, Request] : input) {
+    for (auto [Addr, Func, Data, CRC, Request]: input) {
         stringifyPdu strung = {
             Addr.modbusAddr.getName(),
             Func.FunctionName,
@@ -290,8 +300,8 @@ std::vector<modbusrtu::stringifyPdu> modbusrtu::stringify(std::vector<modbusPdu>
             "request"
         };
         std::string constructor;
-        constructor.reserve(Data.size()*2);
-        for (uint8_t byte : Data) {
+        constructor.reserve(Data.size() * 2);
+        for (uint8_t byte: Data) {
             constructor.append(std::format("0x{:02X} ", byte));
         }
         strung.Data = constructor;
@@ -318,5 +328,3 @@ void modbusrtu::prettyPrint(const stringifyPdu &pdu) {
     printf(pdu.type.c_str());
     printf("\n");
 }
-
-
