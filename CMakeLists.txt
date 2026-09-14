@@ -17,8 +17,8 @@ add_executable(ttyshark src/ttyshark.cpp src/main.cpp
         src/IGMnet/igmnet.h)
 
 
-find_package(ftxui REQUIRED)
-target_link_libraries(ttyshark PRIVATE ftxui::ftxui)
+      #find_package(ftxui REQUIRED)
+      #target_link_libraries(ttyshark PRIVATE ftxui::ftxui)
 #target_link_libraries(ttyshark PRIVATE libmodbus::libmodbus)
 
 install(TARGETS ttyshark DESTINATION "."

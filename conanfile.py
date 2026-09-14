@@ -20,8 +20,8 @@ class ttysharkRecipe(ConanFile):
     # Sources are located in the same place as this recipe, copy them to the recipe
     exports_sources = "CMakeLists.txt", "src/*"
 
-    def requirements(self):
-        self.requires("ftxui/7.0.3")
+  #  def requirements(self):
+    #    self.requires("ftxui/7.0.3")
     #    self.requires("libmodbus/3.1.12")
 
     def layout(self):
