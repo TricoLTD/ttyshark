@@ -15,7 +15,7 @@
   "order sensitive.\n"
 
 void runCap(std::string device, std::string location) {
-  printf("How many seconds to run capture for: ");
+  printf("How long for timeout: ");
   int waitTime;
   scanf("%d", &waitTime);
   printf("What is the baud: ");
@@ -23,12 +23,18 @@ void runCap(std::string device, std::string location) {
   scanf("%d", &bRate);
   auto cap = serialcap(device, bRate, location);
   cap.start(waitTime, 0);
+  bool switchV = true;
+  printf("Enter 1 to end capture: ");
+  int value = 0;
+  while (value != 1) {
+    scanf("%d", &value);
+  }
+  cap.stop();
   auto result = cap.wait();
-
   if (result) {
-    printf("%d", *result);
+    printf("%d\n", *result);
   } else {
-    printf("%s", result.error().what());
+    printf("%s\n", result.error().what());
   }
 
   return;
