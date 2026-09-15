@@ -12,8 +12,12 @@
   "Usage: ttyshark [--help | -h]\n"                                            \
   "ttyshark [--capture | -c] <serial_device> <capture_location [default is "   \
   "./cap_Y-M-D-H-M-S.bin]> : capture of a serial device specification is "     \
-  "order sensitive.\n"
-
+  "order sensitive.\n"                                                         \
+  "ttyshark [--analyze | -a] <capture_location> : analyze the capture bin "    \
+  "dump\n"
+/**
+ * run a capture on a given port
+ */
 void runCap(std::string device, std::string location) {
   printf("How long for timeout: ");
   int waitTime;
@@ -38,6 +42,24 @@ void runCap(std::string device, std::string location) {
   }
 
   return;
+}
+
+/**
+ * analyze a given bin file
+ */
+void analyzeCap(std::string file) {
+  int selection = 0;
+  printf("Select capture type:\n  1. modbusrtu\nEnter selection: ");
+  scanf("%d", &selection);
+  if (selection == 1) {
+    auto lexResult = modbusrtu::lexCapture(file);
+    auto strungResult = modbusrtu::stringify(lexResult);
+    for (auto item : strungResult) {
+      modbusrtu::prettyPrint(item);
+    }
+  } else {
+    printf("invalid or no selection made");
+  }
 }
 
 int main(int argc, char *argv[]) {
@@ -71,9 +93,18 @@ int main(int argc, char *argv[]) {
           auto sD = static_cast<std::string>(args[i + 1]);
 
           runCap(sD, fileString);
+          i += 1;
         } else {
           printf("Invalid arguments for capture");
         }
+      }
+    } else if (args[i] == "--analyze" || args[i] == "-a") {
+      if ((i + 1) < args.size()) {
+        auto fD = static_cast<std::string>(args[i + 1]);
+        analyzeCap(fD);
+        i += 1;
+      } else {
+        printf("Invalid arguments for analysis");
       }
     }
   }
