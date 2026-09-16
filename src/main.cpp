@@ -4,7 +4,6 @@
 #include <chrono>
 #include <ctime>
 #include <iomanip>
-#include <iostream>
 #include <stdio.h>
 #include <string>
 #include <vector>
@@ -49,7 +48,8 @@ void runCap(std::string device, std::string location) {
  */
 void analyzeCap(std::string file) {
   int selection = 0;
-  printf("Select capture type:\n  1. modbusrtu\nEnter selection: ");
+  printf("Select capture type:\n  1. modbusrtu\n  2. modbusrtu-color\nEnter "
+         "selection: ");
   scanf("%d", &selection);
   if (selection == 1) {
     auto lexResult = modbusrtu::lexCapture(file);
@@ -57,6 +57,13 @@ void analyzeCap(std::string file) {
     for (auto item : strungResult) {
       modbusrtu::prettyPrint(item);
     }
+  } else if (selection == 2) {
+    auto lexResult = modbusrtu::lexCapture(file);
+    auto strungResult = modbusrtu::stringify(lexResult);
+    for (auto item : strungResult) {
+      modbusrtu::coloredPrint(item);
+    }
+
   } else {
     printf("invalid or no selection made");
   }

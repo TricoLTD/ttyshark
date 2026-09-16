@@ -7,6 +7,11 @@
 #include <future>
 #include <iostream>
 #include <unordered_set>
+#define CYAN "\033[36m"
+#define GREEN "\033[32m"
+#define BLUE "\033[34m"
+#define YELLOW "\033[33m"
+#define RESET "\033[0m"
 
 std::pair<uint8_t, uint8_t> modbusrtu::plausibleTwo(const std::string &fileName,
                                                     std::size_t stride) {
@@ -309,4 +314,27 @@ void modbusrtu::prettyPrint(const stringifyPdu &pdu) {
   printf("|---");
   printf("%s", pdu.type.c_str());
   printf("\n");
+}
+
+void modbusrtu::coloredPrint(const stringifyPdu &pdu) {
+  printf("%s", pdu.Addr.c_str());
+  printf("    ");
+  printf("%s", pdu.Func.c_str());
+  printf("\n");
+  printf("%s|---", CYAN);
+  printf("%s", pdu.Data.c_str());
+  printf("%s\n", RESET);
+  printf("%s|---", YELLOW);
+  printf("%s", pdu.CRC.c_str());
+  printf("%s\n", RESET);
+  if (pdu.type == "request") {
+    printf("%s|---", BLUE);
+    printf("%s", pdu.type.c_str());
+    printf("%s\n", RESET);
+
+  } else {
+    printf("%s|---", GREEN);
+    printf("%s", pdu.type.c_str());
+    printf("%s\n", RESET);
+  }
 }
